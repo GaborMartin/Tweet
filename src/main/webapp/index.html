@@ -1,12 +1,25 @@
 <!doctype html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Index</title>
-</head>
 <body>
+
+<ul class="navbar">
+    <li><a href="index.html">Home</a>
+    <li><a href="tweet">Tweets</a>
+</ul>
+
+<head>
+    <title>Tweetcool</title>
+    <link rel="stylesheet" href="tweet.css">
+    <meta charset="UTF-8">
+</head>
+<form name="tweetForm" method="post" action="NewTweetServlet">
+    <br>Send a tweet here: <br>
+    <br>Poster:<br>
+    <input type="text" name="poster"><br>
+    Post:<br>
+    <textarea rows="5" cols="30" name="message"></textarea>
+    <br><br>
+    <input type="submit" value="Send tweet!">
+</form>
 </body>
-<h1>Hi!</h1>
-<a href="greeting">Click on this link.</a>
 </html>
