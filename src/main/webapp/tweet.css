@@ -9,7 +9,10 @@ body {
       background-color: #333;}
 
   li {
-      float: left;}
+      text-align: center;
+      font-size: 200%;
+      font-family: algerian, courier;
+      line-height: 80%;}
 
     li a {
       display: inline-block;
@@ -21,5 +24,6 @@ body {
     li a:hover {
       background-color: #111;}
 
-    .active {
-      background-color: red;}
+    form {
+      text-align: center;
+    }

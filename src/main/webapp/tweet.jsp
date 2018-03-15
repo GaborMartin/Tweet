@@ -15,10 +15,10 @@
     <li><a href="index.html">Home</a>
     <li><a href="tweet">Tweets</a>
 </ul>
-
-<br><h2>Choose a filtering option:</h2><br>
+<center><br><h2>Choose a filtering option:</h2></center>
+<center>Click submit to see tweets!</center>
 <form action="#">
-  <select name="Options">
+  <br><select name="Options">
     <option value="default">Default</option>
     <option value="limit">Limit</option>
     <option value="offset">Offset</option>
@@ -35,8 +35,8 @@ String chosenOption = request.getParameter("Options");
 String filterValue = request.getParameter("filtervalue");
 %>
 
-<br><h2>Tweets:</h2><br>
-<table>
+<center><br><h2>Tweets:</h2><br></center>
+<center><table>
     <tr>
          <td><h4><p>Post ID&ensp;</p></td>
          <td><h4><p>Poster&ensp;</p></td>
@@ -95,8 +95,8 @@ String filterValue = request.getParameter("filtervalue");
         </c:if>
     </c:forEach>
     </c:if>
-</table>
+</table></center>
 
-<a href="index.html">Go back</a>
+<center><a href="index.html">Go back</a></center>
 </body>
 </html>
