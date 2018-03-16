@@ -2,21 +2,22 @@ package com.codecool.web.model;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
 
 public class Tweet {
     private int id;
     private String poster;
     private String post;
-    private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss");
-    private Timestamp timestamp;
+    private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd.HH.ss");
+    private String timestamp;
     private static final Random r = new Random();
 
     public Tweet(String poster, String post) {
         this.id = r.nextInt(1000-100) + 100;
         this.poster = poster;
         this.post = post;
-        timestamp = new Timestamp(System.currentTimeMillis());
+        timestamp = sdf.format(new Timestamp(System.currentTimeMillis()));
     }
 
     public int getId() {
@@ -31,7 +32,7 @@ public class Tweet {
         return post;
     }
 
-    public Timestamp getTimestamp() {
+    public String getTimestamp() {
         return timestamp;
     }
 
