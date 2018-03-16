@@ -22,25 +22,23 @@ public class NewTweetServlet extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         List<Tweet> tweets = service.getTweets();
         PrintWriter pw = resp.getWriter();
+
         String poster = req.getParameter("poster");
         String message = req.getParameter("message");
-        if (poster != null && message != null) {
-            Tweet newTweet = new Tweet(poster, message);
-            tweets.add(newTweet);
-            String htmlResponse = "<html>\n" +
-                "    <meta charset=\"UTF-8\">\n";
-            htmlResponse += "<h2>Poster: " + poster;
-            htmlResponse += "<br>Post: " + message + "</br>";
+
+        if (poster.equals("") || message.equals("")) {
+            String htmlResponse = "<html> <head>\n" +
+                "    <link rel=\"stylesheet\" href=\"tweet.css\">\n" +
+                "    <meta charset=\"UTF-8\">\n" +
+                "  </head>";
+            htmlResponse += "<h2>Error! Poster or message is missing!</h2><br> <a href=\"index.html\">Go back!</a>";
             htmlResponse += "</html>";
             pw.println(htmlResponse);
+            return;
+        } else {
+            Tweet newTweet = new Tweet(poster, message);
+            tweets.add(newTweet);
             resp.sendRedirect("index.html");
         }
-
-        String htmlResponse = "<html> <head>\n" +
-            "    <meta charset=\"UTF-8\">\n" +
-            "  </head>";
-        htmlResponse += "<h2>Error! Poster or message is missing!";
-        pw.println(htmlResponse);
-
     }
 }
