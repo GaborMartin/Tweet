@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page import="java.util.*"%>
+<%@ page import="java.io.*"%>
+<%@ page import="java.sql.Timestamp"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -94,6 +97,29 @@ String filterValue = request.getParameter("filtervalue");
             </tr>
         </c:if>
     </c:forEach>
+    </c:if>
+    <c:if test="${(chosenOption == 'from')}">
+        <%
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd.HH.ss");
+        Date givenDate = dateFormat.parse(filterValue);
+        Timestamp filterTimestamp = new java.sql.Timestamp(givenDate.getTime());
+        %>
+        <c:set var="filterDate" value="<%=filterTimestamp%>"/>
+        <c:forEach items="${tweets}" var="tweet">
+            <c:set var="tweetTimeAsString" value="<%=tweet.timestamp%>"/>
+            <%
+            Date tweetTimeAsDate = dateFormat.parse((String)pageContext.getAttribute("tweetTimeAsString"));
+            Timestamp tweetTimestamp = new java.sql.Timestamp(tweetDate.getTime());
+            %>
+            <c:if test="${(TweetTimestamp >= filterTimestamp)}">
+                <tr>
+                    <td><c:out value = "${tweet.id}"/><p></td>
+                    <td><c:out value = "${tweet.poster}"/><p></td>
+                    <td><c:out value = "${tweet.post}"/><p></td>
+                    <td><c:out value = "${tweet.timestamp}"/><p></td>
+                </tr>
+            </c:if>
+        </c:forEach>
     </c:if>
 </table></center>
 
