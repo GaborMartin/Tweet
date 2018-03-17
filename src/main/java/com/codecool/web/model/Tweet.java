@@ -9,7 +9,7 @@ public class Tweet {
     private int id;
     private String poster;
     private String post;
-    private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd.HH.ss");
+    private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd.HH");
     private String timestamp;
     private static final Random r = new Random();
 
