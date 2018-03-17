@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page import="java.util.*"%>
-<%@ page import="java.io.*"%>
-<%@ page import="java.sql.Timestamp"%>
+<%@ page import="java.util.Date,java.sql.Timestamp,java.text.SimpleDateFormat"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,6 +18,7 @@
 </ul>
 <center><br><h2>Choose a filtering option:</h2></center>
 <center>Click submit to see tweets!</center>
+<center>In the case of 'from' filtering option use <b>' yyyy.MM.dd.HH '</b> date type!</center>
 <form action="#">
   <br><select name="Options">
     <option value="default">Default</option>
@@ -100,18 +99,20 @@ String filterValue = request.getParameter("filtervalue");
     </c:if>
     <c:if test="${(chosenOption == 'from')}">
         <%
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd.HH.ss");
-        Date givenDate = dateFormat.parse(filterValue);
-        Timestamp filterTimestamp = new java.sql.Timestamp(givenDate.getTime());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd.HH");
+        Date givenDate = sdf.parse(filterValue);
+        Timestamp givenDateAsTimestamp = new Timestamp(givenDate.getTime());
         %>
-        <c:set var="filterDate" value="<%=filterTimestamp%>"/>
+        <c:set var="filterDate" value="<%=givenDateAsTimestamp%>"/>
         <c:forEach items="${tweets}" var="tweet">
-            <c:set var="tweetTimeAsString" value="<%=tweet.timestamp%>"/>
+            <c:set var="tweetTimeAsLong" value="${tweet.timestamp}"/>
             <%
-            Date tweetTimeAsDate = dateFormat.parse((String)pageContext.getAttribute("tweetTimeAsString"));
-            Timestamp tweetTimestamp = new java.sql.Timestamp(tweetDate.getTime());
+            String tweetTime = (String)pageContext.getAttribute("tweetTimeAsLong");
+            Date tweetTimeAsDate = sdf.parse(tweetTime);
+            Timestamp tweetTimeAsTimestamp = new Timestamp(tweetTimeAsDate.getTime());
             %>
-            <c:if test="${(TweetTimestamp >= filterTimestamp)}">
+            <c:set var="tweetTimeAsTs" value="<%=tweetTimeAsTimestamp%>"/>
+            <c:if test="${(tweetTimeAsTs >= filterDate)}">
                 <tr>
                     <td><c:out value = "${tweet.id}"/><p></td>
                     <td><c:out value = "${tweet.poster}"/><p></td>
