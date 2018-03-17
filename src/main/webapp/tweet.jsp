@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ page errorPage = "ShowError.jsp" %>
 <%@ page import="java.util.Date,java.sql.Timestamp,java.text.SimpleDateFormat"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,7 +18,15 @@
     <li><a href="index.html">Home</a>
     <li><a href="tweet">Tweets</a>
 </ul>
-<center><br><h2>Choose a filtering option:</h2></center>
+
+<center><h2>Choose a filtering option:</h2>
+
+<p><h4>Default (All tweets)<br>
+Limit (Number of results to return)<br>
+Offset (Results to skip. 2 start the response with the 3rd result)<br>
+Poster (Tweets by a given poster)<br>
+From (Results posted after the given timestamp)</h4></p></center>
+
 <center>Click submit to see tweets!</center>
 <center>In the case of 'from' filtering option use <b>' yyyy.MM.dd.HH '</b> date type!</center>
 <form action="#">
@@ -27,7 +37,7 @@
     <option value="poster">Poster</option>
     <option value="from">From</option>
   </select>
-  <br><br>
+  <br>
   <input type="text" name="filtervalue"<br>
   <input type="submit" value="Submit!">
 </form>
@@ -37,8 +47,8 @@ String chosenOption = request.getParameter("Options");
 String filterValue = request.getParameter("filtervalue");
 %>
 
-<center><br><h2>Tweets:</h2><br></center>
-<center><table>
+<center><h2>Tweets:</h2>
+<table>
     <tr>
          <td><h4><p>Post ID&ensp;</p></td>
          <td><h4><p>Poster&ensp;</p></td>
@@ -51,6 +61,10 @@ String filterValue = request.getParameter("filtervalue");
 
     <c:if test="${(chosenOption == 'limit')}">
     <%int endIndex = Integer.parseInt(filterValue) - 1;%>
+    <%if (endIndex < 0) {
+        endIndex = 0;
+    }
+    %>
     <c:set var="endIndex" value="<%=endIndex%>"/>
     <c:forEach items="${tweets}" end="${endIndex}" var="tweet">
     <tr>
